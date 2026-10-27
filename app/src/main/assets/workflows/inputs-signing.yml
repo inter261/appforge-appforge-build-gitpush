@@ -1,0 +1,5 @@
+inputs:
+  keystore_b64: { description: "Keystore (base64)", required: false, default: "" }
+  keystore_password: { description: "Password keystore", required: false, default: "" }
+  key_alias: { description: "Alias key", required: false, default: "" }
+  key_password: { description: "Password key", required: false, default: "" }

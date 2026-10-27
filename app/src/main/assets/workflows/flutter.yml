@@ -1,0 +1,30 @@
+name: Build
+on:
+  workflow_dispatch:
+    @@INPUTS@@
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    @@PERMISSIONS@@
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: 17 }
+      - uses: subosito/flutter-action@v2
+        with: { channel: stable, cache: true }
+      @@ANDROID_PREP@@
+      - name: Siapkan platform Android
+        run: |
+          if [ ! -d android ]; then
+            NAME=$(grep -m1 '^name:' pubspec.yaml | awk '{print $2}')
+            flutter create . --platforms=android --project-name "$NAME"
+          fi
+      - run: flutter pub get
+      - name: Build APK
+        run: flutter build apk @@FLUTTER_FLAGS@@
+      - uses: actions/upload-artifact@v4
+        with:
+          name: apk
+          path: "build/app/outputs/flutter-apk/*.apk"
+          retention-days: 1
+      @@RELEASE@@

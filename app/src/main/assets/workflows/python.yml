@@ -1,0 +1,30 @@
+name: Build
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: Test
+        run: |
+          pip install pytest
+          pytest || [ $? -eq 5 ]
+      - name: Package
+        run: |
+          if [ -f pyproject.toml ] || [ -f setup.py ]; then
+            pip install build
+            python -m build
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: dist
+          if-no-files-found: ignore
+          retention-days: 1

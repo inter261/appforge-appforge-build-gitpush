@@ -1,0 +1,11 @@
+- name: Pakai debug keystore tetap
+  run: |
+    mkdir -p ~/.android
+    echo "@@DEBUG_KEYSTORE_B64@@" | base64 -d > ~/.android/debug.keystore
+- name: Gradle init script (signing dan versi)
+  run: |
+    mkdir -p ~/.gradle/init.d
+    cat > ~/.gradle/init.d/appforge.gradle <<'APPFORGE_EOF'
+    @@INIT_GRADLE@@
+    APPFORGE_EOF
+@@SIGNING@@

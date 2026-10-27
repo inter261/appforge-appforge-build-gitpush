@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_open_github" android:title="Buka di GitHub" app:showAsAction="never" />
+    <item android:id="@+id/action_expand_all" android:title="Buka semua langkah" app:showAsAction="never" />
+    <item android:id="@+id/action_collapse_all" android:title="Tutup semua langkah" app:showAsAction="never" />
+    <item android:id="@+id/action_history" android:title="Riwayat build" app:showAsAction="never" />
+    <item android:id="@+id/action_build_settings" android:title="Pengaturan build" app:showAsAction="never" />
+    <item android:id="@+id/action_settings" android:title="Pengaturan aplikasi" app:showAsAction="never" />
+    <item android:id="@+id/action_delete" android:title="Hapus proyek…" app:showAsAction="never" />
+</menu>

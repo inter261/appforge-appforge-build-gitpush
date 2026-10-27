@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tema terang. Material 3 dari library Material Components: tombol, dialog, tab, dan kolom teks sudah jadi. -->
+    <style name="Theme.AppForge" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#006879</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryContainer">#A6EDFF</item>
+        <item name="colorOnPrimaryContainer">#001F26</item>
+        <item name="colorSecondaryContainer">#CEE7EE</item>
+        <item name="colorOnSecondaryContainer">#051F25</item>
+        <item name="colorSurface">#F7FAFB</item>
+        <item name="android:colorBackground">#F7FAFB</item>
+        <item name="android:windowBackground">#F7FAFB</item>
+        <item name="android:statusBarColor">#F7FAFB</item>
+        <item name="android:navigationBarColor">#F7FAFB</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
+</resources>

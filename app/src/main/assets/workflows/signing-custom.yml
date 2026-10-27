@@ -1,0 +1,19 @@
+- name: Signing dengan keystore sendiri
+  env:
+    KS_B64: ${{ inputs.keystore_b64 }}
+    KS_PASS: ${{ inputs.keystore_password }}
+    KS_ALIAS: ${{ inputs.key_alias }}
+    KEY_PASS: ${{ inputs.key_password }}
+  run: |
+    echo "::add-mask::$KS_B64"
+    echo "::add-mask::$KS_PASS"
+    echo "::add-mask::$KEY_PASS"
+    if [ -z "$KS_B64" ]; then echo "Keystore tidak dikirim lewat input workflow"; exit 1; fi
+    echo "$KS_B64" | base64 -d > "$RUNNER_TEMP/release.keystore"
+    {
+      echo "AF_KS_FILE=$RUNNER_TEMP/release.keystore"
+      echo "AF_KS_PASS=$KS_PASS"
+      echo "AF_KS_ALIAS=$KS_ALIAS"
+      echo "AF_KEY_PASS=$KEY_PASS"
+      echo "AF_KS_CUSTOM=1"
+    } >> "$GITHUB_ENV"

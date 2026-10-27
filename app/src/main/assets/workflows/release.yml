@@ -1,0 +1,22 @@
+- name: Rilis di GitHub
+  env:
+    GH_TOKEN: ${{ github.token }}
+    GH_REPO: ${{ github.repository }}
+  run: |
+    MODE="@@RELEASE_MODE@@"
+    TAG="@@RELEASE_TAG@@"
+    mapfile -t FILES < <(find . -path '@@RELEASE_FIND@@' -type f)
+    if [ "${#FILES[@]}" -eq 0 ]; then echo "Tidak ada file untuk dirilis"; exit 1; fi
+    if [ "$MODE" = "new" ]; then
+      if [ -z "$TAG" ]; then TAG="build-${GITHUB_RUN_NUMBER}"; fi
+      if gh release view "$TAG" >/dev/null 2>&1; then TAG="${TAG}-${GITHUB_RUN_NUMBER}"; fi
+    fi
+    if [ -z "$TAG" ]; then TAG="build-${GITHUB_RUN_NUMBER}"; fi
+    if gh release view "$TAG" >/dev/null 2>&1; then
+      echo "Memperbarui rilis $TAG"
+      gh release upload "$TAG" "${FILES[@]}" --clobber
+    else
+      echo "Membuat rilis $TAG"
+      gh release create "$TAG" "${FILES[@]}" --title "$TAG" --notes "Dibuat oleh AppForge" --target "$GITHUB_SHA"
+    fi
+    echo "Rilis: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/$TAG"

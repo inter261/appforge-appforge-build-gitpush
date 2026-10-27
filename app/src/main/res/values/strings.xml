@@ -1,0 +1,6 @@
+<resources>
+    <string name="repo_err_token">Isi GitHub token dulu di Pengaturan</string>
+    <string name="repo_err_foreign">Repo %1$s bukan buatan AppForge, tidak dihapus</string>
+    <string name="repo_err_scope">Token tidak punya izin menghapus repo (butuh scope delete_repo)</string>
+    <string name="repo_err_http">HTTP %1$d</string>
+</resources>

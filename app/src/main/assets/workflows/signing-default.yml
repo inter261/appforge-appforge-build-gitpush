@@ -1,0 +1,8 @@
+- name: Signing bawaan (debug key tetap)
+  run: |
+    {
+      echo "AF_KS_FILE=$HOME/.android/debug.keystore"
+      echo "AF_KS_PASS=android"
+      echo "AF_KS_ALIAS=androiddebugkey"
+      echo "AF_KEY_PASS=android"
+    } >> "$GITHUB_ENV"

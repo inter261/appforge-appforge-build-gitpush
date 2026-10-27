@@ -1,0 +1,23 @@
+name: Build
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # Contoh setup bahasa lain (hapus tanda # untuk mengaktifkan):
+      # - uses: actions/setup-go@v5
+      #   with: { go-version: stable }
+      # - uses: dtolnay/rust-toolchain@stable
+      - name: Build
+        run: |
+          mkdir -p out
+          echo "Hello dari AppForge" > out/hello.txt
+          # Ganti dengan perintah build Anda, hasilnya taruh di folder out/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: output
+          path: out
+          if-no-files-found: ignore
+          retention-days: 1

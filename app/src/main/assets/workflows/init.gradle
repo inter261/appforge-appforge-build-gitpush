@@ -1,0 +1,33 @@
+// Dibuat oleh AppForge: menerapkan signing dan versi tanpa mengubah build script proyek.
+allprojects {
+    afterEvaluate { p ->
+        if (!p.plugins.hasPlugin("com.android.application")) return
+        def ext = p.extensions.getByName("android")
+
+        def ksFile = System.getenv("AF_KS_FILE")
+        if (ksFile) {
+            def cfg = ext.signingConfigs.findByName("appforge")
+            if (cfg == null) cfg = ext.signingConfigs.create("appforge")
+            cfg.storeFile = new File(ksFile)
+            cfg.storePassword = System.getenv("AF_KS_PASS")
+            cfg.keyAlias = System.getenv("AF_KS_ALIAS")
+            cfg.keyPassword = System.getenv("AF_KEY_PASS")
+            def custom = System.getenv("AF_KS_CUSTOM") == "1"
+            ext.buildTypes.each { bt ->
+                if (custom || (bt.name == "release" && bt.signingConfig == null)) bt.signingConfig = cfg
+            }
+        }
+
+        def vc = System.getenv("AF_VERSION_CODE")
+        def vn = System.getenv("AF_VERSION_NAME")
+        def comps = p.extensions.findByName("androidComponents")
+        if ((vc || vn) && comps != null) {
+            comps.onVariants(comps.selector().all(), { variant ->
+                variant.outputs.each { o ->
+                    if (vc) o.versionCode.set(vc.toInteger())
+                    if (vn) o.versionName.set(vn)
+                }
+            })
+        }
+    }
+}
